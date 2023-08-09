@@ -36,8 +36,8 @@ app.get("/",(req, res)=>{
     res.send("hiii")
 })
 
-app.get("/sendmail", (req, res) => {
-
+app.get("/check", (req, res) => {
+    res.send("Backend is Working and its version 1.0");
 })
 app.use(require('./routes/auth'));
 app.use(require('./routes/post'));
