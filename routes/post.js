@@ -55,7 +55,19 @@ router.get('/mypost',requireLogin, (req, res) =>{
     })
 })
 
+router.get('/detail/:postId',requireLogin, (req, res) =>{
+    Post.findOne({_id: req.params.postId})
+    .populate("postedBy","name email")
+    .then(data => {
+        return res.json(data);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+})
+
 router.put('/like',requireLogin,(req,res)=>{
+    console.log(req.body.postId)
     Post.findByIdAndUpdate(req.body.postId,{
         $push:{likes:req.user._id}
     },{
@@ -70,6 +82,7 @@ router.put('/like',requireLogin,(req,res)=>{
 })
 
 router.put('/unlike',requireLogin, (req, res) => {
+    console.log(req.body.postId)
     Post.findByIdAndUpdate(req.body.postId, {
         $pull: {likes: req.user._id}
     },{
@@ -127,7 +140,5 @@ router.delete('/deletepost/:postId', requireLogin, (req, res) => {
         
     })
 })
-
-// router.get('/getsubpost', {$in: requireLogin, (req, res)})
  
 module.exports = router

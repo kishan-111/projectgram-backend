@@ -5,8 +5,12 @@ const mongoose =require('mongoose')
 const PORT = process.env.PORT
 const MONGODB_URL = process.env.MONGODB_URL
 const cors = require('cors')
+const nodemailer = require('nodemailer')
 
 app.use(cors())
+
+mongoose.set("strictQuery", false);
+
 mongoose.connect(MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -30,6 +34,10 @@ require('./models/Post');
 app.use(express.json());
 app.get("/",(req, res)=>{
     res.send("hiii")
+})
+
+app.get("/sendmail", (req, res) => {
+
 })
 app.use(require('./routes/auth'));
 app.use(require('./routes/post'));
